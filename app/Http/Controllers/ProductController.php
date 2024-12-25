@@ -4,18 +4,29 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     public function display()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
+
         $products = Product::with('category')->get(); // Fetch products with related category
-        return view('products.display', compact('products'));
+        return view('products.display', compact('products','userInfo'));
     }
 
     public function create()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
+
         $categories = Category::all();  // Fetch all categories
-        return view('products.create', compact('categories'));
+        return view('products.create', compact('categories','userInfo'));
     }
 
     public function store(Request $request)
@@ -48,10 +59,15 @@ class ProductController extends Controller
 
     public function edit($productid)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first(); 
+
         $product = Product::where('pid', $productid)->firstOrFail();
 
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+        return view('products.edit', compact('product', 'categories','userInfo'));
     }
 
     public function update(Request $request, $productid)

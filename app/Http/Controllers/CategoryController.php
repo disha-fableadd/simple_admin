@@ -3,21 +3,35 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
     public function display()
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
+
         $categories = Category::all(); 
-        return view('categories.display', compact('categories'));
+        return view('categories.display', compact('categories','userInfo'));
     }
     public function create()
     {
-        return view('categories.create');
+
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
+        
+        return view('categories.create',compact('userInfo'));
     }
 
     public function store(Request $request)
     {
+
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:500',
@@ -32,8 +46,13 @@ class CategoryController extends Controller
     }
     public function edit( $categoryId)
     {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login');
+        }
+        $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first(); 
+
         $category = Category::where('cid', $categoryId)->firstOrFail();
-        return view('categories.edit', compact('category'));
+        return view('categories.edit', compact('category','userInfo'));
     }
 
     public function update(Request $request, Category $category)

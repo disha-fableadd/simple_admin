@@ -56,52 +56,52 @@ class UserController extends Controller
 
   
     public function update(Request $request)
-{
-    
-    if (!Session::has('user_id')) {
+    {
         
-        return redirect()->route('login');
-    }
-
-
-    $userId = Session::get('user_id');
-
-  
-    $user = Users::find($userId);
-    $userInfo = UserInfo::where('uid', $userId)->first();
-
-  
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'contact' => 'nullable|string|max:15',
-        'gender' => 'nullable|string|in:male,female,other',
-        'dob' => 'nullable|date',
-        'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-    ]);
-
-   
-    $userInfo->update([
-        'name' => $request->name,
-        'contact' => $request->contact,
-        'gender' => $request->gender,
-        'dob' => $request->dob,
-    ]);
-
-    
-    if ($request->hasFile('image')) {
-      
-        if ($userInfo->image) {
-            Storage::delete('public/' . $userInfo->image);
+        if (!Session::has('user_id')) {
+            
+            return redirect()->route('login');
         }
-
+    
+    
+        $userId = Session::get('user_id');
+    
       
-        $imagePath = $request->file('image')->store('profile_images', 'public');
-        $userInfo->update(['image' => $imagePath]);
+        $user = Users::find($userId);
+        $userInfo = UserInfo::where('uid', $userId)->first();
+    
+      
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'contact' => 'nullable|string|max:15',
+            'gender' => 'nullable|string|in:male,female,other',
+            'dob' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
+        ]);
+    
+       
+        $userInfo->update([
+            'name' => $request->name,
+            'contact' => $request->contact,
+            'gender' => $request->gender,
+            'dob' => $request->dob,
+        ]);
+    
+        
+        if ($request->hasFile('image')) {
+          
+            if ($userInfo->image) {
+                Storage::delete('public/' . $userInfo->image);
+            }
+    
+          
+            $imagePath = $request->file('image')->store('profile_images', 'public');
+            $userInfo->update(['image' => $imagePath]);
+        }
+    
+       
+        return redirect()->route('profile')->with('success', 'Profile updated successfully');
     }
-
-   
-    return redirect()->route('profile')->with('success', 'Profile updated successfully');
-}
     
 
     

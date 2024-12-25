@@ -6,6 +6,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
+
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,5 +47,18 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::put('/products/{pid}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+Route::get('customers', [CustomerController::class, 'display'])->name('customers.display');
+Route::get('customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::put('customers/{custid}', [CustomerController::class, 'update'])->name('customers.update');
+Route::delete('customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+Route::get('/orders', [OrderController::class, 'display'])->name('orders.display');
+Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
 

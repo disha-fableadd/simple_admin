@@ -23,7 +23,7 @@
             <ul class="navbar-nav">
                 <!-- Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link active" href="dashboard.php">
+                    <a class="nav-link active" href="{{ route('dashboard') }}">
                         <i class="ni ni-tv-2 text-primary"></i> Dashboard
                     </a>
                 </li>
@@ -81,12 +81,12 @@
                     <div class="collapse" id="utilitiesMenu">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="addcustomer.php" class="nav-link">
+                                <a href="{{ route('customers.create') }}" class="nav-link">
                                     <i class="ni ni-fat-add text-blue"></i> Add Customer
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="allcustomer.php" class="nav-link">
+                                <a href="{{ route('customers.display') }}" class="nav-link">
                                     <i class="ni ni-circle-08 text-info"></i> All Customers
                                 </a>
                             </li>
@@ -101,12 +101,12 @@
                     <div class="collapse" id="orderMenu">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="addorder.php" class="nav-link">
+                                <a href="{{ route('orders.create') }}" class="nav-link">
                                     <i class="ni ni-fat-add text-blue"></i> Add Order
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="allorder.php" class="nav-link">
+                                <a href="{{ route('orders.display') }}" class="nav-link">
                                     <i class="ni ni-archive-2 text-red"></i> All Orders
                                 </a>
                             </li>

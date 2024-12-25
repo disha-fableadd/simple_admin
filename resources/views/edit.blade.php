@@ -92,7 +92,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-profileimage">Profile Image</label>
                                     @if ($userInfo->image)
-                                        <img src="{{ asset('storage/' . $userInfo->image) }}" alt="Profile Image" class="img-fluid mb-3 rounded-circle" style="max-height: 150px; width: 150px;">
+                                        <img src="{{ asset('storage/' . $userInfo->image) }}" alt="Profile Image" class="img-fluid mb-3 rounded" style="max-height: 150px; width: 150px;">
                                     @else
                                         <img src="{{ asset('storage/placeholder.png') }}" alt="No Profile Image" class="img-fluid mb-3" style="max-height: 150px; width:150px;">
                                     @endif

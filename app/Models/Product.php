@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'pid';
     protected $fillable = ['name', 'description', 'price', 'cid', 'stock', 'img'];
     public function category()
     {
         return $this->belongsTo(Category::class, 'cid', 'cid'); 
     }
-    protected $primaryKey = 'pid';
+  
 }

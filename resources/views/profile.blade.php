@@ -22,7 +22,7 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
                             <a href="#">
-                                <img src="{{ asset('storage/' . $userInfo->image)  }}" class="rounded-circle">
+                                <img src="{{ asset('storage/' . $userInfo->image)  }}" class="rounded">
                             </a>
                         </div>
                     </div>

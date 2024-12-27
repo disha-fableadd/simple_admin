@@ -142,7 +142,7 @@
                     const row = `
             <tr data-product-id="${selectedProduct}">
                 <td>${selectedProductName}</td>
-                <td><img src="${selectedProductImage}" alt="${selectedProductName}" width="100" height="100"></td>
+                <td><img src="${selectedProductImage}" alt="${selectedProductName}"    width="100" height="100"></td>
                 <td>${selectedProductPrice}</td>
                 <td class="quantity-container">
                     <button type="button" class="btn btn-secondary btn-sm decreaseQty">-</button>
@@ -252,7 +252,7 @@
                             showMessage('Order submitted successfully!', 'success');
                             setTimeout(function () {
                                 window.location.href = '{{ route('orders.display') }}';
-                            }, 2000);
+                            }, 500);
                         } else {
                             showMessage('Failed to submit order. Please try again.', 'danger');
                         }

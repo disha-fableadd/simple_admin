@@ -18,7 +18,7 @@ class dashboardController extends Controller
 
 
         // Fetch data from the database
-        $totalOrders = DB::table('orderitem')->count();
+        $totalOrders = DB::table('orders')->count();
         $totalProducts = DB::table('products')->count();
         $totalCategories = DB::table('categories')->count();
         $totalCustomers = DB::table('customers')->count();

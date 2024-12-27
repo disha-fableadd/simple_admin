@@ -111,7 +111,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="completeorder.php" class="nav-link">
+                                <a href="{{ route('completed') }}" class="nav-link">
                                     <i class="ni ni-archive-2 text-red"></i> Completed Orders
                                 </a>
                             </li>

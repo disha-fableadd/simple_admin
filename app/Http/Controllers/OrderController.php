@@ -81,7 +81,7 @@ class OrderController extends Controller
         // Eager load 'orderItems' and 'customer' relationships
         $orderItems = OrderItem::with(['order.customer', 'product'])->get();
 
-        return view('orders.display', compact('orderItems','userInfo'));
+        return view('orders.display', compact('orderItems', 'userInfo'));
     }
 
 
@@ -92,10 +92,61 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
-        $order = Order::with('orderItems.product','customer')->findOrFail($id);
-        
-        return view('orders.show', compact('order','userInfo'));
+        $order = Order::with('orderItems.product', 'customer')->findOrFail($id);
 
-      
+        return view('orders.show', compact('order', 'userInfo'));
+
+
     }
+
+    public function updateQuantity(Request $request, $id)
+    {
+        $request->validate([
+            'qty' => 'required|integer|min:1',
+        ]);
+
+        $item = OrderItem::findOrFail($id);
+        $item->qty = $request->qty;
+        $item->totalprice = $item->price * $request->qty;
+        $item->save();
+
+        return response()->json([
+            'totalPrice' => $item->totalprice,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $orderItem = OrderItem::findOrFail($id);
+
+        if ($orderItem) {
+            $orderItem->delete();
+            return response()->json(['message' => 'Item deleted successfully.']);
+        }
+
+        return response()->json(['message' => 'Item not found.'], 404);
+    }
+
+    public function completeOrder($id)
+{
+    $order = Order::findOrFail($id);
+
+    $order->status = 'completed';
+    $order->save();
+
+    return redirect()->route('orders.completed')->with('success', 'Order completed successfully');
+}
+public function completedOrders()
+{
+    if (!session()->has('user_id')) {
+        return redirect()->route('login');
+    }
+    
+    $userInfo = DB::table('userinfo')->where('uid', session('user_id'))->first();
+    
+    $completedOrders = Order::where('status', 'completed')->with('customer')->get();
+
+    return view('orders.completed', compact('completedOrders', 'userInfo'));
+}
+
 }

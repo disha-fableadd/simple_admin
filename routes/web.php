@@ -60,5 +60,10 @@ Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.c
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+Route::patch('/orders/{id}', [OrderController::class, 'updateQuantity']);
+Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+Route::post('/orders/{id}/complete', [OrderController::class, 'completeOrder'])->name('orders.complete');
+Route::get('/completed', [OrderController::class, 'completedOrders'])->name('completed');
+
 
 
